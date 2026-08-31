@@ -1,0 +1,4 @@
+[package]
+name = "Idris2-Physics3"
+version = "0.3.0"
+ipkg = "Idris2-Physics3.ipkg"
