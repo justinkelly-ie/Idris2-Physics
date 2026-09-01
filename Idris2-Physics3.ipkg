@@ -11,7 +11,10 @@ depends = base
 
 sourcedir = "src"
 
-modules = Math.DiscreteActionPrinciple
+modules = Empirical.Ratio
+        , Empirical.Measurements
+        , Empirical.Comparison
+        , Math.DiscreteActionPrinciple
         , Math.DiscreteBoltzmannDistribution
         , Math.DiscreteCasimirEffect
         , Math.TopologicalChernNumber
@@ -65,3 +68,5 @@ modules = Math.DiscreteActionPrinciple
         , Math.DiscreteRationalSnell
         , Math.DensityMatrix
         , Math.NeutrinoOscillation
+        , Math.DiscreteHiggsMechanism
+        , Math.DiscreteFeynmanLoop
