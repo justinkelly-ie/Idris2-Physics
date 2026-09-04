@@ -53,6 +53,7 @@ modules =         Empirical.Comparison
         , Math.OscillatingReactions
         , Math.PeakBindingEnergy
         , Math.PhaseInvarianceMeasure
+        , Math.PhysicsScaleTransforms
         , Math.PlasmaRecombination
         , Math.PrefixCodeOptimality
         , Math.QuantumPotential
