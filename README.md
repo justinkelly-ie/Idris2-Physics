@@ -1,9 +1,9 @@
-# ⚡ Idris2-Physics3
+# ⚡ Idris2-Physics
 
 **Constructive Physical Laws, Empirical Measurements & Rational Comparison Engine for Idris 2**
 
-`Idris2-Physics3` provides the core physical field laws, conservation theorems, and experimental measurement comparison engine for the constructivist universe ecosystem:
-- **Empirical Measurement & Comparison Engine**: Stores CERN, CODATA 2022, and Planck 2018 particle data as exact rational confidence intervals (`SingFraction` / `UnixelFraction`) and computes exact rational error metrics without floating-point numbers (`Double`, `Float`).
+`Idris2-Physics` provides the core physical field laws, conservation theorems, and experimental measurement comparison engine for the constructivist universe ecosystem:
+- **Empirical Measurement & Comparison Engine**: Stores CERN, CODATA 2022, and Planck 2018 particle data as exact rational confidence intervals (`UnixelFraction`) and computes exact rational error metrics without floating-point numbers (`Double`, `Float`).
 - **Discrete Dirac Spinors & Pauli Exclusion**: Relativistic fermion currents, Dirac bispinors, and compile-time Pauli exclusion limits.
 - **Poynting Energy Theorem & Electromagnetism**: Discrete Maxwell equations, Poynting energy flux conservation, and Aharonov-Bohm holonomy phase locking.
 - **2-to-2 Particle Kinematics & High-Energy Scattering**: Hadronization, QGP jet fragmentation, and 3-flavor PMNS neutrino oscillation dynamics.
@@ -13,9 +13,9 @@
 
 ## 📊 Factual Precision Review: Theoretical Model vs. Empirical Data
 
-`Idris2-Physics3` includes automated comparison metrics (`Empirical.Comparison`) comparing theoretical ratios derived in [`Idris2-Universe3`](../Idris2-Universe3) against empirical experimental datasets:
+`Idris2-Physics` includes automated comparison metrics (`Empirical.Comparison`) comparing theoretical ratios derived in [`Idris2-Universe`](../Idris2-Universe) against empirical experimental datasets:
 
-| Physical Observable Ratio | Empirical Measurement (CODATA / CERN / Planck) | Derived Model Value (`Idris2-Universe3`) | Absolute Difference | Relative Fractional Error | Model Accuracy |
+| Physical Observable Ratio | Empirical Measurement (CODATA / CERN / Planck) | Derived Model Value (`Idris2-Universe`) | Absolute Difference | Relative Fractional Error | Model Accuracy |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Proton-to-Electron Mass ($m_p / m_e$)** | **$1836.15267343 \pm 0.00000011$** (CODATA 2022) | **$1836.15$** (Knot complexity $1836 + 1$) | $0.002673$ | **$0.000146\%$** ($1.46 \times 10^{-6}$) | **99.99985%** 🌟 |
 | **Inverse Fine Structure ($\alpha^{-1}$)** | **$137.035999084 \pm 0.000000021$** (CODATA 2022) | **$137.00$** ($128 \text{ DE} + 9 \text{ spatial}$) | $0.035999$ | **$0.0263\%$** ($2.63 \times 10^{-4}$) | **99.9737%** 🌟 |
@@ -29,7 +29,7 @@
 The tiny fractional offsets between bare theoretical model values and empirical data are physically accounted for by **Quantum Vacuum Loop Corrections (Renormalization)**:
 
 1. **Fine Structure Constant ($\Delta \alpha^{-1} \approx +0.036$)**:
-   The bare grid capacity ($128 \text{ DE} + 9 \text{ spatial} = 137$) represents the tree-level coupling. 1-loop discrete vacuum polarization (`Math.DiscreteFeynmanLoop`) adds the leptonic loop screening effect $\Delta \alpha^{-1} \approx +0.035999$.
+   The bare grid capacity ($128 \text{ DE} + 9 \text{ spatial} = 137$) represents the tree-level coupling. 1-loop discrete vacuum polarization (`Math.VacuumPolarization`) adds the leptonic loop screening effect $\Delta \alpha^{-1} \approx +0.035999$.
 2. **Proton/Electron Mass Ratio ($\Delta (m_p/m_e) \approx +0.00267$)**:
    The $+0.002673$ shift is the electrostatic Coulomb self-energy of the proton's net $+1e$ charge ($\Delta m_{\text{EM}} \propto \alpha \cdot m_p$).
 3. **Electroweak Boson Mass Ratio ($\Delta (m_W/m_Z) \approx +0.00045$)**:
@@ -54,8 +54,8 @@ The tiny fractional offsets between bare theoretical model values and empirical 
 Built with Idris 2 (`0.8.0`) inside Fedora Toolbox 44:
 
 ```bash
-toolbox run -c fedora-toolbox-44 /var/home/justin/.local/bin/idris2 --build Idris2-Physics3.ipkg
-toolbox run -c fedora-toolbox-44 /var/home/justin/.local/bin/idris2 --install Idris2-Physics3.ipkg
+idris2 --build Idris2-Physics.ipkg
+idris2 --install Idris2-Physics.ipkg
 ```
 
 ---

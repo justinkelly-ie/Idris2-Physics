@@ -16,8 +16,8 @@ auditRatioWithinConfidenceInterval : UnixelFraction -> EmpiricalRatio -> Bool
 auditRatioWithinConfidenceInterval modelVal emp =
   let low  = lowerBound emp
       high = upperBound emp
-      tLow  = rationalEquiv modelVal low || rationalEquiv (subSingFraction modelVal low) (mkUnixelFraction 0 1) || (let diff = subSingFraction modelVal low in not (unwrapBox (num diff) < 0))
-      tHigh = rationalEquiv modelVal high || (let diff = subSingFraction high modelVal in not (unwrapBox (num diff) < 0))
+      tLow  = rationalEquiv modelVal low || rationalEquiv (subUnixelFraction modelVal low) (mkUnixelFraction 0 1) || (let diff = subUnixelFraction modelVal low in not (unwrapBox (num diff) < 0))
+      tHigh = rationalEquiv modelVal high || (let diff = subUnixelFraction high modelVal in not (unwrapBox (num diff) < 0))
   in tLow && tHigh
 
 ||| Computes the exact Relative Rational Error E_rel = |modelVal - nominalRatio| / nominalRatio.
@@ -25,25 +25,25 @@ public export
 relativeRationalError : UnixelFraction -> EmpiricalRatio -> UnixelFraction
 relativeRationalError modelVal emp =
   let nom = nominalRatio emp
-      diff = subSingFraction modelVal nom
+      diff = subUnixelFraction modelVal nom
       absNum = intToBoxInt (abs (unwrapBox (num diff)))
       absDiff = mkUnixelFraction absNum (unwrapUnixel (den diff))
-  in divSingFraction absDiff nom
+  in divUnixelFraction absDiff nom
 
 ||| Computes the Wildberger Quadrance Error Q_err = (modelVal - nominalRatio)^2.
 public export
 quadranceError : UnixelFraction -> EmpiricalRatio -> UnixelFraction
 quadranceError modelVal emp =
   let nom = nominalRatio emp
-      diff = subSingFraction modelVal nom
-  in mulSingFraction diff diff
+      diff = subUnixelFraction modelVal nom
+  in mulUnixelFraction diff diff
 
 ||| Audits that a theoretical value matches the empirical nominal value within a given error tolerance epsilon.
 public export
 auditRatioMatchesWithinTolerance : UnixelFraction -> EmpiricalRatio -> UnixelFraction -> Bool
 auditRatioMatchesWithinTolerance modelVal emp eps =
   let err = relativeRationalError modelVal emp
-      diff = subSingFraction eps err
+      diff = subUnixelFraction eps err
   in not (unwrapBox (num diff) < 0)
 
 ||| Audits whether a model ratio matches empirical nominal within a given percentage error fraction (e.g. 1/10000 = 0.01%).

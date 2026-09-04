@@ -6,17 +6,7 @@ import public Core.UnixelFraction
 
 %default total
 
-public export
-subSingFraction : UnixelFraction -> UnixelFraction -> UnixelFraction
-subSingFraction = subUnixelFraction
 
-public export
-addSingFraction : UnixelFraction -> UnixelFraction -> UnixelFraction
-addSingFraction = addUnixelFraction
-
-public export
-mulSingFraction : UnixelFraction -> UnixelFraction -> UnixelFraction
-mulSingFraction = mulUnixelFraction
 
 ------------------------------------------------------------------------
 -- EMPIRICAL PHYSICAL MEASUREMENT & RATIONAL CONFIDENCE INTERVAL TYPES
@@ -56,12 +46,12 @@ mkEmpiricalRatioFromMeasurements name measA measB =
       nomB = value measB
       errB = uncertainty measB
       
-      minA = subSingFraction nomA errA
-      maxA = addSingFraction nomA errA
-      minB = subSingFraction nomB errB
-      maxB = addSingFraction nomB errB
+      minA = subUnixelFraction nomA errA
+      maxA = addUnixelFraction nomA errA
+      minB = subUnixelFraction nomB errB
+      maxB = addUnixelFraction nomB errB
       
-      nominalVal = divSingFraction nomA nomB
-      lowerVal   = divSingFraction minA maxB
-      upperVal   = divSingFraction maxA minB
+      nominalVal = divUnixelFraction nomA nomB
+      lowerVal   = divUnixelFraction minA maxB
+      upperVal   = divUnixelFraction maxA minB
   in MkEmpiricalRatio nominalVal lowerVal upperVal name (datasetSource measA ++ " / " ++ datasetSource measB)
