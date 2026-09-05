@@ -16,6 +16,7 @@ record DiscreteHiggsVacuum where
 
 ||| Computes the Discrete Higgs Potential V(φ) = λ * (φ^2 - v^2/2)^2.
 public export
+%inline
 discreteHiggsPotential : DiscreteHiggsVacuum -> UnixelFraction -> UnixelFraction
 discreteHiggsPotential (MkDiscreteHiggsVacuum vevSq lam _) phiSq =
   let halfVev = mulUnixelFraction (mkUnixelFraction (intToBoxInt 1) 2) vevSq
@@ -25,6 +26,7 @@ discreteHiggsPotential (MkDiscreteHiggsVacuum vevSq lam _) phiSq =
 ||| Verifies that spontaneous symmetry breaking ground state expectation value φ^2 = v^2/2
 ||| achieves the absolute minimum discrete potential V(φ) = 0.
 public export
+%inline
 auditHiggsVacuumStabilityProof : Bool
 auditHiggsVacuumStabilityProof =
   let vac = MkDiscreteHiggsVacuum (mkUnixelFraction (intToBoxInt 246) 1) (mkUnixelFraction (intToBoxInt 1) 8) (mkUnixelFraction (intToBoxInt 2) 3)

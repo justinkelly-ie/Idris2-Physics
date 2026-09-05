@@ -18,6 +18,7 @@ record VacuumPolarization where
 ||| In discrete unixel arithmetic, this reduces to exact rational fraction scaling:
 ||| α_eff = α_0 + (α_0 * q^2 / (3 * loopCutoff)).
 public export
+%inline
 discreteRunningCoupling : VacuumPolarization -> UnixelFraction
 discreteRunningCoupling (MkVacuumPolarization alpha0 qSq cutoff) =
   let loopFactor = mkUnixelFraction (intToBoxInt 1) (3 * (S cutoff))
@@ -27,6 +28,7 @@ discreteRunningCoupling (MkVacuumPolarization alpha0 qSq cutoff) =
 ||| Verifies that 1-loop running fine-structure coupling exhibits quantum vacuum polarization
 ||| (α_eff > α_0 for high momentum transfer q^2 > 0).
 public export
+%inline
 auditVacuumPolarizationProof : Bool
 auditVacuumPolarizationProof =
   let loop = MkVacuumPolarization (mkUnixelFraction (intToBoxInt 1) 137) (mkUnixelFraction (intToBoxInt 10) 1) 5

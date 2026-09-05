@@ -46,12 +46,22 @@ auditRatioMatchesWithinTolerance modelVal emp eps =
       diff = subUnixelFraction eps err
   in not (unwrapBox (num diff) < 0)
 
+||| Converts a Unixel denominator to an exact Integer.
+public export
+unixelToInteger : Unixel -> Integer
+unixelToInteger (MkUnixel Z) = 0
+unixelToInteger (MkUnixel (S k)) = 1 + unixelToInteger (MkUnixel k)
+
 ||| Audits whether a model ratio matches empirical nominal within a given percentage error fraction (e.g. 1/10000 = 0.01%).
 public export
 auditRatioMatchesWithinPercentError : UnixelFraction -> EmpiricalRatio -> UnixelFraction -> Bool
 auditRatioMatchesWithinPercentError modelVal emp maxRelError =
   let err = relativeRationalError modelVal emp
-      lhs = unwrapBox (num err) * cast (unwrapUnixel (den maxRelError))
-      rhs = unwrapBox (num maxRelError) * cast (unwrapUnixel (den err))
+      errDen = unixelToInteger (den err)
+      maxDen = unixelToInteger (den maxRelError)
+      lhs = unwrapBox (num err) * maxDen
+      rhs = unwrapBox (num maxRelError) * errDen
   in lhs <= rhs
+
+
 
