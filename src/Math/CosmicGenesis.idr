@@ -88,6 +88,12 @@ landauerFreezeOutStep bits tScale dmCount =
 --    (Law 18: Discrete Cosmic Genesis & Primordial Relic Freeze-Out)
 ------------------------------------------------------------------------
 
+||| Aggregates a list of multiset token bags using Monoid concat.
+public export
+aggregateMultisets : List (Multiset BoxInt String) -> Multiset BoxInt String
+aggregateMultisets = concat
+
+
 ||| Audits Law 18 across all four axiomatic tenets:
 ||| 1. Genesis Ground State: VM=0, DE=128, DM=55, Budget=210.
 ||| 2. Substrate Out-of-Equilibrium Drive: g22 = 0, g12 = 1.
@@ -105,5 +111,9 @@ auditCosmicGenesisRelicFreezeOutProof =
                          unwrapBox (photonTokens finalBaryon) == 1800
       (dissTokens, newDM) = landauerFreezeOutStep 5 3 55
       passLandauer = dissTokens == 15 && newDM == 70
-  in validPart && passAnnihilation && passLandauer
+      bag1 = AddM "Baryon" (intToBoxInt 10) ZeroM
+      bag2 = AddM "Photon" (intToBoxInt 20) ZeroM
+      passMonoid = aggregateMultisets [bag1, bag2] == addMultiset bag1 bag2
+  in validPart && passAnnihilation && passLandauer && passMonoid
+
 
