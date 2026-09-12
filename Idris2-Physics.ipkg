@@ -8,6 +8,8 @@ depends = base
         , Idris2-Multiset-Transform
         , Idris2-Multiset-Binary
         , Idris2-Geometry
+        , Idris2-Topology
+
 
 sourcedir = "src"
 
@@ -55,6 +57,8 @@ modules =         Empirical.Comparison
         , Math.PhaseInvarianceMeasure
         , Math.LawFunctor
         , Math.ApplicativeHomomorphism
+        , Math.PhysicsMonad
+        , Math.MotivicProof
         , Math.PhysicsScaleTransforms
         , Math.PlasmaRecombination
         , Math.PrefixCodeOptimality

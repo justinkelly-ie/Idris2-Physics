@@ -87,7 +87,7 @@ computeMomentumY (MkD2Q9Node _ _ f2 _ f4 f5 f6 f7 f8) =
 ||| Discrete Bhatnagar-Gross-Krook (BGK) collision step preserving exact total mass and momentum:
 ||| Relaxes diagonal shear stress while strictly conserving ∑ f_i, ∑ f_i c_ix, ∑ f_i c_iy.
 public export
-collideBGKNode : D2Q9Node -> D2Q9Node
+collideBGKNode : (1 node : D2Q9Node) -> D2Q9Node
 collideBGKNode (MkD2Q9Node f0 f1 f2 f3 f4 f5 f6 f7 f8) =
   let delta = intToBoxInt 2
       f5' = f5 - delta
