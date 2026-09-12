@@ -40,7 +40,7 @@ Show DiscreteEMCell where
 
 ||| Total electromagnetic energy density u = E^2 + B^2.
 public export
-electromagneticEnergyDensity : DiscreteEMCell -> BoxInt
+electromagneticEnergyDensity : (1 cell : DiscreteEMCell) -> BoxInt
 electromagneticEnergyDensity (MkDiscreteEMCell e b _ _) = e + b
 
 ------------------------------------------------------------------------
@@ -50,22 +50,19 @@ electromagneticEnergyDensity (MkDiscreteEMCell e b _ _) = e + b
 ||| Evaluates the local discrete Poynting energy balance on a cell:
 ||| Δu + div(S) + (J · E) == 0  ==>  u(t+1) = u(t) - div(S) - (J · E)
 public export
-stepPoyntingEnergy : DiscreteEMCell -> BoxInt
-stepPoyntingEnergy cell =
-  let uCurr = electromagneticEnergyDensity cell
-      divS  = poyntingFluxOut cell
-      work  = jouleWork cell
-  in uCurr - divS - work
+stepPoyntingEnergy : (1 cell : DiscreteEMCell) -> BoxInt
+stepPoyntingEnergy (MkDiscreteEMCell e b s j) =
+  (e + b) - s - j
 
 ||| Verifies local discrete Poynting conservation:
 ||| Δu = u(t+1) - u(t) == - (div(S) + J·E).
 public export
 verifyLocalPoyntingBalance : DiscreteEMCell -> Bool
-verifyLocalPoyntingBalance cell =
-  let u0 = electromagneticEnergyDensity cell
-      u1 = stepPoyntingEnergy cell
+verifyLocalPoyntingBalance (MkDiscreteEMCell e b s j) =
+  let u0 = e + b
+      u1 = (e + b) - s - j
       deltaU = u1 - u0
-      rhs = negate (poyntingFluxOut cell + jouleWork cell)
+      rhs = negate (s + j)
   in deltaU == rhs
 
 ------------------------------------------------------------------------
@@ -80,8 +77,8 @@ public export
 auditLocalPoyntingBalanceProof : Bool
 auditLocalPoyntingBalanceProof =
   let cell = MkDiscreteEMCell (intToBoxInt 50) (intToBoxInt 50) (intToBoxInt 15) (intToBoxInt 5)
-      u0 = electromagneticEnergyDensity cell
-      u1 = stepPoyntingEnergy cell
+      u0 = electromagneticEnergyDensity (MkDiscreteEMCell (intToBoxInt 50) (intToBoxInt 50) (intToBoxInt 15) (intToBoxInt 5))
+      u1 = stepPoyntingEnergy (MkDiscreteEMCell (intToBoxInt 50) (intToBoxInt 50) (intToBoxInt 15) (intToBoxInt 5))
   in unwrapBox u0 == 100 &&
      unwrapBox u1 == 80 &&
      verifyLocalPoyntingBalance cell
@@ -93,8 +90,8 @@ public export
 auditVacuumPoyntingInvarianceProof : Bool
 auditVacuumPoyntingInvarianceProof =
   let cell = MkDiscreteEMCell (intToBoxInt 64) (intToBoxInt 64) (intToBoxInt 0) (intToBoxInt 0)
-      u0 = electromagneticEnergyDensity cell
-      u1 = stepPoyntingEnergy cell
+      u0 = electromagneticEnergyDensity (MkDiscreteEMCell (intToBoxInt 64) (intToBoxInt 64) (intToBoxInt 0) (intToBoxInt 0))
+      u1 = stepPoyntingEnergy (MkDiscreteEMCell (intToBoxInt 64) (intToBoxInt 64) (intToBoxInt 0) (intToBoxInt 0))
   in u0 == u1 && unwrapBox u0 == 128
 
 ||| Audits Toroidal Boundaryless Flux Closure (Global div S = 0):

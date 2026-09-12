@@ -4,7 +4,9 @@ import Data.Vect
 import Core.BoxInt
 import Core.UnixelFraction
 import Core.Goh
+import Core.Polynumber
 import Geometry.Applicative
+import Math.DensityMatrix
 
 %default total
 
@@ -66,10 +68,21 @@ implementation {dim : Nat} -> {color : MetricColor} -> EilenbergMooreAlgebra (Ph
 ||| Active force interaction: evaluates sequential particle interactions under monadic bind.
 public export
 sequentialForceStep : {d : Nat} -> {c : MetricColor} ->
-                      PhysicsEnvelope d c GohMultiset ->
+                      (1 initialStep : PhysicsEnvelope d c GohMultiset) ->
                       (GohMultiset -> PhysicsEnvelope d c GohMultiset) ->
                       PhysicsEnvelope d c GohMultiset
-sequentialForceStep initialStep forceLaw = initialStep >>= forceLaw
+sequentialForceStep (PhysEnv space val) forceLaw =
+  case forceLaw val of
+    PhysEnv _ val' => PhysEnv space val'
+
+||| Evaluates discrete Von Neumann entropy of a quantum density matrix inside the PhysicsEnvelope Monad
+||| while preserving linear resource safety and metric bounds.
+public export
+evaluateMonadicEntropy : {dim : Nat} -> {color : MetricColor} -> {poly : Polynumber} ->
+                         (1 env : PhysicsEnvelope dim color (DensityMatrix poly)) ->
+                         PhysicsEnvelope dim color BoxInt
+evaluateMonadicEntropy (PhysEnv space dm) =
+  PhysEnv space (computeVonNeumannEntropy dm)
 
 ||| Compiler proof witness verifying Monad associativity law for force interactions.
 public export

@@ -26,9 +26,10 @@ relativeRationalError : UnixelFraction -> EmpiricalRatio -> UnixelFraction
 relativeRationalError modelVal emp =
   let nom = nominalRatio emp
       diff = subUnixelFraction modelVal nom
-      absNum = intToBoxInt (abs (unwrapBox (num diff)))
+      absNum = absBox (num diff)
       absDiff = mkUnixelFraction absNum (unwrapUnixel (den diff))
   in divUnixelFraction absDiff nom
+
 
 ||| Computes the Wildberger Quadrance Error Q_err = (modelVal - nominalRatio)^2.
 public export
